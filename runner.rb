@@ -88,10 +88,14 @@ def allowed_to_run?(instruction, rule_params)
 end
 
 def main
-  if are_any_circuits_running?
-    log('Irrigation currently running. Not going to process any instructions.')
+  if are_there_any_instructions?
+    if are_any_circuits_running?
+      log('Irrigation currently running. Not going to process any instructions.')
+    else
+      process_instructions
+    end
   else
-    process_instructions
+    log('No instructions to process.')
   end
 end
 
@@ -131,6 +135,10 @@ end
 
 def are_any_circuits_running?
   !(request_switcher_status=~/^Switch:\s\d+:\sOn/).nil?
+end
+
+def are_there_any_instructions?
+  (Dir.children(INSTRUCTIONS_DIRECTORY).count > 0)
 end
 
 def request_switcher_status
