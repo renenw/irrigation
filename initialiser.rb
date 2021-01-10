@@ -26,8 +26,7 @@ end
 
 def pond_ferns
   {
-#    duration_seconds: 180,
-    duration_seconds: 60,
+    duration_seconds: 180,
     description:      'Next to pond, under yellow wood (daily) [6]',
     ignore:           'all',
   }
@@ -35,37 +34,31 @@ end
 
 def front_misters
   {
-#    duration_seconds: 180,
-    duration_seconds: 60,
+    duration_seconds: 180,
     description:      'Next to driveway, under jacaranda (daily) [2]',
-    ignore:           %w(hot time_of_day windy wet),
+    ignore:           'all',
   }
 end
 
 def front
   {
-#    duration_seconds: 1200,
-    duration_seconds: 60,
+    duration_seconds: 1200,
     description:      'Front Beds, under jacaranda (every third day) [1]',
-    ignore:           %w(windy time_of_day),
-  }  if is_day_n?(2)
+  }  if is_day_n?(3)
 end
 
 def front_fynbos
   {
-#    duration_seconds: 1200,
-    duration_seconds: 60,
+    duration_seconds: 1200,
     description:      'Front beds round pond and in front of house (every third day) [0]',
-  }  if is_day_n?(2)
+  }  if is_day_n?(3)
 end
 
 def pool_beds
   {
-#    duration_seconds: 1200,
-    duration_seconds: 60,
+    duration_seconds: 1200,
     description:      'Beds down past pool (every third day) [5]',
-    ignore:           %w(hot),
-  }  if is_day_n?(2)
+  }  if is_day_n?(3)
 end
 
 
