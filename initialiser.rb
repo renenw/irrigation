@@ -40,6 +40,13 @@ def front_misters
   }
 end
 
+def front_lawn
+  {
+    duration_seconds: 1200,
+    description:      'Front lawn (every third day) [4]',
+  } if is_day_n?(3)
+end
+
 def front
   {
     duration_seconds: 1200,

@@ -2,13 +2,14 @@ require 'json'
 require 'syslog/logger'
 require "uri"
 require "net/http"
-# require 'date'
 
 @log = Syslog::Logger.new 'IRRIGATION_RUNNER'
 
 INSTRUCTIONS_DIRECTORY            = '/home/pi/irrigation_instructions'
 SWITCHER_URL                      = 'http://192.168.0.203/'
 RAINY_DAY_PRECIPITATION_THRESHOLD = 2.5
+WINDY_THRESHOLD                   = 6.5
+TEMPERATURE_THRESHOLD             = 30
 CONFIG                            = JSON.parse(File.read('/home/pi/irrigation/config.json'))
 
 # Based instructions in the IRRIGATION_INSTRUCTIONS directory....
@@ -108,15 +109,24 @@ end
 
 def weather_rules
 
-  weather = load_current_weather
+  weather     = load_current_weather
 
-  windy   = (weather[:hourly][:wind_speed][0]   >  5)
-  hot     = (weather[:hourly][:temperatures][0] > 30)
+  wind_speed  = weather[:hourly][:wind_speed][0]
+  temperature = weather[:hourly][:temperatures][0]
+
+  windy       = (wind_speed  > WINDY_THRESHOLD)
+  hot         = (temperature > TEMPERATURE_THRESHOLD)
 
   wet     = false
   wet     = true  if weather[:today][:precipitation]      > RAINY_DAY_PRECIPITATION_THRESHOLD
   wet     = true  if weather[:three_days][:precipitation] > RAINY_DAY_PRECIPITATION_THRESHOLD * 2
   wet     = true  if weather[:week][:precipitation]       > RAINY_DAY_PRECIPITATION_THRESHOLD * 4
+
+  log("Wind speed: #{wind_speed}")                                 if windy
+  log("Temperature: #{temperature}")                               if hot
+  log("Rain today: #{weather[:today][:precipitation]}")            if wet
+  log("Rain three days: #{weather[:three_days][:precipitation]}")  if wet
+  log("Rain week: #{weather[:week][:precipitation]}")              if wet
 
   {
     windy:  windy,
