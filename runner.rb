@@ -103,7 +103,7 @@ end
 def initialise_rules
   {
     running:     false,
-    time_of_day: (8..14).include?(Time.now.utc.hour),
+    time_of_day: (9..14).include?(Time.now.utc.hour),
   }.merge(weather_rules)
 end
 
