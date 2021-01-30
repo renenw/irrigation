@@ -68,6 +68,12 @@ def pool_beds
   }  if is_day_n?(3)
 end
 
+def driveway
+  {
+    duration_seconds: 1200,
+    description:      'Driveway flower beds (every third day) [14]',
+  }  if is_day_n?(3)
+end
 
 
 def write(instruction)
