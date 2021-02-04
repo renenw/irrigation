@@ -47,6 +47,14 @@ def front_lawn
   } if is_day_n?(3)
 end
 
+def outhouse_lawn
+  {
+    duration_seconds: 1200,
+    description:      'Outhouse lawn (every third day) [10]',
+  } if is_day_n?(3)
+
+end
+
 def front
   {
     duration_seconds: 1200,
