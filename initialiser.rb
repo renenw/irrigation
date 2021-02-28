@@ -76,6 +76,13 @@ def pool_beds
   }  if is_day_n?(3)
 end
 
+def pool_lawn
+  {
+    duration_seconds: 1200,
+    description:      'Pool lawn, Camp Ground Road side pool (every third day) [7]',
+  }  if is_day_n?(3)
+end
+
 def driveway
   {
     duration_seconds: 1200,
